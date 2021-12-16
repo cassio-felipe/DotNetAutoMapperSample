@@ -9,7 +9,8 @@ namespace DotNetAutoMapperSample
         public MappingProfile()
         {
             CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, PersonDto>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"));
         }    
     }
 }
