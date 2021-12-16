@@ -13,23 +13,25 @@ namespace DotNetAutoMapperSample.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
-        private readonly List<User> _users; 
             
         public UserController(ILogger<UserController> logger, IMapper mapper)
         {
             _logger = logger;
             _mapper = mapper;
-            _users = FillUser();
         }
 
         [HttpGet]
         public IEnumerable<UserDto> GetAll()
         {
-            var usersDto = _mapper.Map<List<UserDto>>(_users);
+            var users = UserRepositoryFake.GetAll();
+            var usersDto = _mapper.Map<List<UserDto>>(users);
             return usersDto;
         }
-        
-        private List<User> FillUser()
+    }
+
+    public static class UserRepositoryFake
+    {
+        public static List<User> GetAll()
         {
             return new()
             {
